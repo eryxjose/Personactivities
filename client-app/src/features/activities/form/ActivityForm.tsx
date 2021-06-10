@@ -1,18 +1,47 @@
-import React from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { Button, Form, Segment } from 'semantic-ui-react';
+import { Activity } from '../../../app/models/activity';
 
-export default function ActivityForm() {
+interface Props {
+    activity: Activity | undefined;
+    closeForm: () => void;
+    createOrEdit: (activity: Activity) => void;
+}
+
+export default function ActivityForm({activity: selectedActivity, closeForm, createOrEdit}: Props) {
+
+    const initialState = selectedActivity ?? {
+        id: '',
+        title: '',
+        category: '',
+        description: '',
+        date: '',
+        city: '',
+        venue: '',
+    }
+
+    const [activity, setActivity] = useState(initialState);
+
+    function handleSubmit() {
+        createOrEdit(activity);
+    }
+
+    function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const {name, value} = event.target;
+        setActivity({...activity, [name]: value});
+    }
+
     return (
         <Segment clearing>
-            <Form>
-                <Form.Input placeholder='Título' />
-                <Form.TextArea placeholder='Descrição' />
-                <Form.Input placeholder='Categoria' />
-                <Form.Input placeholder='Data' />
-                <Form.Input placeholder='Cidade' />
-                <Form.Input placeholder='Local' />
+            <Form onSubmit={handleSubmit} autoComplete='off'>
+                <Form.Input placeholder='Título' value={activity.title} name='title' onChange={handleInputChange} />
+                <Form.TextArea placeholder='Descrição' value={activity.description} name='description' onChange={handleInputChange} />
+                <Form.Input placeholder='Categoria' value={activity.category} name='category' onChange={handleInputChange} />
+                <Form.Input placeholder='Data' value={activity.date} name='date' onChange={handleInputChange} />
+                <Form.Input placeholder='Cidade' value={activity.city} name='city' onChange={handleInputChange} />
+                <Form.Input placeholder='Local' value={activity.venue} name='venue' onChange={handleInputChange} />
                 <Button floated='right' positive type='submit' content='Enviar' />
-                <Button floated='right' type='button' content='Cancelar' />
+                <Button onClick={closeForm} floated='right' type='button' content='Cancelar' />
             </Form>
         </Segment>
     )
