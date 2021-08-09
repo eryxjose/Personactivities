@@ -8,7 +8,11 @@ interface Props {
     createOrEdit: (activity: Activity) => void;
 }
 
-export default function ActivityForm({activity: selectedActivity, closeForm, createOrEdit}: Props) {
+export default function ActivityForm({
+    activity: selectedActivity, 
+    closeForm, 
+    createOrEdit
+}: Props) {
 
     const initialState = selectedActivity ?? {
         id: '',
