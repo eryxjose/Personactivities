@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Application.Activities;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
+//using System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
 
 namespace API.Controllers
 {
@@ -13,6 +14,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
+            var a = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
             return await Mediator.Send(new List.Query());
         }
 

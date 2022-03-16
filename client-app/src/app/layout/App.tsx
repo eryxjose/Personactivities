@@ -6,21 +6,20 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 import { v4 as uuid } from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
+import { useStore } from '../stores/store';
+import { observer } from 'mobx-react-lite';
 
 function App() {
+  const {activityStore} = useStore();
 
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    agent.Activities.list().then(response => {
-      setActivities(response);
-      setLoading(false);
-    })
-  }, []);
+    activityStore.loadActivities();
+  }, [activityStore]);
 
   function handleFormOpen(id?: string) {
     id ? handleSelectedActivity(id) : handleCanceledSelectActivity();
@@ -67,7 +66,7 @@ function App() {
     })
   }
 
-  if (loading) return <LoadingComponent content='Carregando dados..' />
+  if (activityStore.loadingInitial) return <LoadingComponent content='Carregando dados..' />
 
   return (
     <Fragment>
@@ -90,4 +89,4 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);
