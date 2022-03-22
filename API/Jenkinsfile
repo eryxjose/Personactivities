@@ -8,25 +8,9 @@ pipeline {
                 cleanWs()
             }
         }
-        stage ('Git Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/eryxjose/Personactivities.git'
-            }
-        }
-        stage('Restore packages') {
-            steps {
-                sh "dotnet restore ${workspace}\\personactivities\\Personactivities.sln"
-            }
-        }
-        stage('Increase version') {
-            steps {
-                echo "${env.BUILD_NUMBER}"
-                
-            }
-        }
         stage('Build') {
             steps {
-                sh "msbuild.exe ${workspace}\\personactivities\\personactivities.sln /nologo /nr:false  /p:platform=\"x64\" /p:configuration=\"release\" /p:PackageCertificateKeyFile=<path-to-certificate-file>.pfx /t:clean;restore;rebuild"
+                sh "docker-compose -f docker-compose.yml up --build -d"
             }
         }
     }
