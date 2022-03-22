@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Restore packages') {
             steps {
-                bat "dotnet restore ${workspace}\\personactivities\\Personactivities.sln"
+                sh "dotnet restore ${workspace}\\personactivities\\Personactivities.sln"
             }
         }
         stage('Increase version') {
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat "msbuild.exe ${workspace}\\personactivities\\personactivities.sln /nologo /nr:false  /p:platform=\"x64\" /p:configuration=\"release\" /p:PackageCertificateKeyFile=<path-to-certificate-file>.pfx /t:clean;restore;rebuild"
+                sh "msbuild.exe ${workspace}\\personactivities\\personactivities.sln /nologo /nr:false  /p:platform=\"x64\" /p:configuration=\"release\" /p:PackageCertificateKeyFile=<path-to-certificate-file>.pfx /t:clean;restore;rebuild"
             }
         }
     }
