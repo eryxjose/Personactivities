@@ -8,9 +8,14 @@ pipeline {
                 cleanWs()
             }
         }
+        stage('Example') {
+            steps {
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+            }
+        }
         stage('Build') {
             steps {
-                sh "docker-compose -f docker-compose.yml up --build -d"
+                sh "docker --help"
             }
         }
     }
