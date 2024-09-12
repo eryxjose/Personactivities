@@ -16,6 +16,7 @@ export default class ActivityStore {
     loadActivities = async () => {
         this.setLoadingInitial(true);
         try {
+            debugger;
             const activities = await agent.Activities.list();
             activities.forEach(activity => {
                 activity.date = activity.date.split('T')[0];

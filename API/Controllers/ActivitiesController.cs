@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Application.Activities;
 using Domain;
@@ -15,6 +16,7 @@ namespace API.Controllers
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
             var a = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
+            
             return await Mediator.Send(new List.Query());
         }
 

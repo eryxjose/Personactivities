@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { Activity } from '../../../app/models/activity';
+import { useStore } from '../../../app/stores/store';
 import ActivityDetails from '../details/ActivityDetails';
 import ActivityForm from '../form/ActivityForm';
 import ActivityList from './ActivityList';
+import './dashboard.scss';
 
 interface Props {
     activities: Activity[];
@@ -30,8 +32,16 @@ export default function ActivityDashboard({
     deleteActivity,
     submitting,
 }: Props) {
+
+    const { activityStore } = useStore();
+    const { loadActivities } = activityStore;
+    
+    useEffect(() => {
+        if (activities.length <= 1) loadActivities();
+    }, [activities.length, loadActivities])
+
     return (
-        <Grid>
+        <Grid className='my-background'>
             <Grid.Column width='10'>
                 <ActivityList 
                     activities={activities} 
@@ -59,4 +69,8 @@ export default function ActivityDashboard({
             </Grid.Column>
         </Grid>
     )
+}
+
+function loadActivities() {
+    throw new Error('Function not implemented.');
 }
