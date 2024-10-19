@@ -1,5 +1,9 @@
+:root {
+  --body-background-color-gray: "#ececec";
+}
+
 body {
-  background-color: #eaeaea;
+  background-color: var(--body-background-color-gray);
 }
 
 .ui.inverted.top.fixed.menu {
